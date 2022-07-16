@@ -3,6 +3,7 @@ from loguru import logger
 import sys
 from pathlib import Path
 from myapp import sub
+import time
 
 # reset previous logger, then add console logging
 logger.remove()
@@ -16,9 +17,18 @@ app.add_typer(sub.app, name="sub")
 @app.command()
 def info():
     """
-    An example of command in main.
+    An example of a command in main.
     """
-    logger.success("Info command is called.")
+    logger.info("Demonstrating progress bar.")
+
+    total = 0
+    with typer.progressbar(range(100)) as progress:
+        for value in progress:
+            time.sleep(value * 0.001)
+            total += 1
+        typer.echo(f"Processed {total} things.")
+
+    logger.success("Info command is successfully executed.")
 
 
 @app.callback()
@@ -29,6 +39,8 @@ def main(log_file: Path = typer.Option(None,
     This is a skeleton of MyApp.
 
     For global options, you must call it before commands or sub-commands.
+
+    Author: Avan Suinesiaputra (2022)
     """
     if debug:
         logger.remove()

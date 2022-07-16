@@ -12,3 +12,4 @@ def show(name: str = typer.Argument(..., help="Name argument.")):
     """
     logger.info(f"Show under sub command is called.")
     logger.debug(f"Argument name = {name}")
+    typer.echo(f"Hello {name}!")
